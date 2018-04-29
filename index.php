@@ -35,11 +35,12 @@
                             
                             if (!data) {  //data == false
                                 
-                                alert("Username is AVAILABLE!");
-                                
+                                $("#unavailable").html("<h4> Username is available</h4>");
+                                $("#unavailable").css("color","green");                                
                             } else {
                                 
-                                alert("Username ALREADY TAKEN!");
+                                $("#unavailable").html("<h4> Username is not available</h4>");
+                                $("#unavailable").css("color","red");
                                 
                             }
                         
@@ -59,12 +60,12 @@
                 
                 $("#re-password").change(function(){
                     if($("#password").val() == $("#same").val()){
-                        alert("passwords match");
+                        //alert("passwords match");
                         passwordsMatch = true;
                         $("#notMatchMessage").hide();
                     }
                     else{
-                        alert("passwords do not match");
+                        //alert("passwords do not match");
                         passwordsMatch = false;
                         $("#notMatchMessage").show();
                     }
@@ -111,7 +112,9 @@
                         success: function(data,status) {
                           
                           //alert(data.city);
-                          $("#city").html(data.city);
+                            $("#city").html(data.city);
+                            $("#lat").html(data.latitude);
+                            $("#long").html(data.longitude);
                         
                         },
                         complete: function(data,status) { //optional, used for debugging purposes
@@ -164,10 +167,12 @@
                 
                 Desired Username: <input type="text" id = "username"><br>
                 
-                Password: <input type="password"><br>
+                Password: <input id = "password" type="password"><br>
                 
-                Type Password Again: <id = "same" input type="password"><br>
+                Type Password Again: <input id = "same"  type="password"><br>
+                
                 <p id="notMatchMessage">passwords do not match</p>
+                
                 
                 <input type="submit" value="Sign up!">
                 <br />
