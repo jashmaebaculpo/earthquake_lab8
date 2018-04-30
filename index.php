@@ -60,8 +60,8 @@
                 
                 $("#same").change(function()
                 {
-                    var first = $("password").val();
-                    var second = $("same").val();
+                    var first = $("#password").val();
+                    var second = $("#same").val();
                     
                     if(first == second)
                     {
@@ -69,7 +69,7 @@
                         $("#passwordErr").html("passwords match");
                         $("#passwordErr").css("color","green");
                     }
-                    else
+                    if(first != second)
                     {
                         //alert("passwords do not match");
                         $("#passwordErr").html("passwords don't match");
