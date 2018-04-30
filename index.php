@@ -87,16 +87,20 @@
                             type: "GET",
                             url: "http://itcdland.csumb.edu/~milara/ajax/countyList.php",
                             dataType: "json",
-                            data: { "state": $("#state").val()},
-                            success: function(data,status) {
-                              
-                            //   alert(data[0].county);
-                            $("#county").html("<option> - Select One -</option>");
-                            for(var i = 0; i < data.length; i++)
+                            data: 
+                            { 
+                                "state": $("#state").val()
+                            },
+                            success: function(data,status) 
                             {
-                                 $("#county").append("<option>" + data[i].county + "</option>");
-                            }
-                            
+                              
+                                //   alert(data[0].county);
+                                $("#county").html("<option> - Select One -</option>");
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                     $("#county").append("<option>" + data[i].county + "</option>");
+                                }
+                                
                             },
                             complete: function(data,status) //optional, used for debugging purposes
                             {
@@ -116,10 +120,15 @@
                         type: "GET",
                         url: "http://itcdland.csumb.edu/~milara/ajax/cityInfoByZip.php",
                         dataType: "json",
-                        data: { "zip": $("#zipCode").val()   },
-                        success: function(data,status) {
+                        data: 
+                        { 
+                            "zip": $("#zipCode").val()
+                        },
+                        success: function(data,status) 
+                        {
                           
-                          if(!data){
+                          if(!data)
+                          {
                                 $("#zipMSG").html("Zip-Code not found!");
                                 $("#zipMSG").css("color", "red");
                                 $("#city").html("");
@@ -135,7 +144,8 @@
                             }
                         
                         },
-                        complete: function(data,status) { //optional, used for debugging purposes
+                        complete: function(data,status) //optional, used for debugging purposes
+                        { 
                         //alert(status);
                         }
                         
@@ -166,9 +176,9 @@
                 Zip Code:    <input type="text" id="zipCode"><br>
                 City:        <span id="city"></span>
                 <br>
-                Latitude: 
+                Latitude: <span id = "lat"></span>
                 <br>
-                Longitude:
+                Longitude: <span id = "long"></span>
                 <br><br>
                 State: 
                 <select id="state">
