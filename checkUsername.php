@@ -1,6 +1,6 @@
 <?php
 
-    include '../dbConnection.php';
+    include 'DB.php';
 
     $conn = connectToDB("lab8");
 
