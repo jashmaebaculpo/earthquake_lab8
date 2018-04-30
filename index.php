@@ -15,11 +15,10 @@
         </script>
         
         <script>
+        /*global $*/
             
             $(document).ready( function()
             {
-                
-                
                 $("#username").change(function()
                 {
                     //alert(  $("#username").val() );
@@ -31,21 +30,23 @@
                             data: 
                             { 
                                 "username": $("#username").val() 
-                                
+                     
                             },
                             success: function(data,status) 
                             {
                                 //alert(data.password);
                                 
                                 if (!data) 
-                                {  //data == false
-                                    $("#unavailable").html("<h4> Username is available</h4>");
+                                {  //alert("yes");
+                                    //data == false
+                                    $("#unavailable").html("Username is available");
                                     $("#unavailable").css("color","green");                                
                                 } 
                                 
                                 else 
                                 {
-                                    $("#unavailable").html("<h4> Username is not available</h4>");
+                                    //alert("no");
+                                    $("#unavailable").html("Username is not available");
                                     $("#unavailable").css("color","red");
                                 }
                         
@@ -191,7 +192,9 @@
                 
                 Select a County: <select id="county"></select><br>
                 
-                Desired Username: <input type="text" id = "username"><br>
+                Desired Username: <input type="text" id = "username">
+                <span id = "unavailable"></span>
+                <br>
                 
                 Password: <input id = "password" type="password"><br>
                 
