@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,90 +7,101 @@
         <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <script>
         
-            function validateForm() {
-                
+            function validateForm() 
+            {
                 return false;
-           
             }
             
         </script>
         
         <script>
             
-            $(document).ready( function(){
+            $(document).ready( function()
+            {
+                
                 
                 $("#username").change(function()
                 {
                     //alert(  $("#username").val() );
-                    $.ajax({
-
-                        type: "GET",
-                        url: "checkUsername.php",
-                        dataType: "json",
-                        data: { "username": $("#username").val() },
-                        success: function(data,status) {
+                    $.ajax(
+                        {
+                            type: "GET",
+                            url: "checkUsername.php",
+                            dataType: "json",
+                            data: 
+                            { 
+                                "username": $("#username").val() 
+                                
+                            },
+                            success: function(data,status) 
+                            {
+                                //alert(data.password);
+                                
+                                if (!data) 
+                                {  //data == false
+                                    $("#unavailable").html("<h4> Username is available</h4>");
+                                    $("#unavailable").css("color","green");                                
+                                } 
+                                
+                                else 
+                                {
+                                    $("#unavailable").html("<h4> Username is not available</h4>");
+                                    $("#unavailable").css("color","red");
+                                }
                         
-                            //alert(data.password);
-                            
-                            if (!data) {  //data == false
-                                
-                                $("#unavailable").html("<h4> Username is available</h4>");
-                                $("#unavailable").css("color","green");                                
-                            } else {
-                                
-                                $("#unavailable").html("<h4> Username is not available</h4>");
-                                $("#unavailable").css("color","red");
-                                
+                            },
+                            complete: function(data,status) //optional, used for debugging purposes
+                            { 
+                                //alert(status);
                             }
-                        
-                        },
-                        complete: function(data,status) { //optional, used for debugging purposes
-                        //alert(status);
-                        }
-                        
                         });//ajax
-                    
-                    
                 });
+
                 
-                if($("#password").val() == "" && $("#same").val() == ""){
-                    $("#notMatchMessage").hide();
-                }
-                
-                $("#re-password").change(function(){
-                    if($("#password").val() == $("#same").val()){
+                $("#same").change(function()
+                {
+                    var first = $("password").val();
+                    var second = $("same").val();
+                    
+                    if(first == second)
+                    {
                         //alert("passwords match");
-                        passwordsMatch = true;
-                        $("#notMatchMessage").hide();
+                        $("#passwordErr").html("passwords match");
+                        $("#passwordErr").css("color","green");
                     }
-                    else{
+                    else
+                    {
                         //alert("passwords do not match");
-                        passwordsMatch = false;
-                        $("#notMatchMessage").show();
+                        $("#passwordErr").html("passwords don't match");
+                        $("#passwordErr").css("color","red");
                     }
                 });
                 
-                $("#state").change(function() {
+                $("#state").change(function() 
+                {
                     //alert($("#state").val());
                     
-                    $.ajax({
+                    $.ajax(
+                        {
 
-                        type: "GET",
-                        url: "http://itcdland.csumb.edu/~milara/ajax/countyList.php",
-                        dataType: "json",
-                        data: { "state": $("#state").val()},
-                        success: function(data,status) {
-                          
-                        //   alert(data[0].county);
-                        $("#county").html("<option> - Select One -</option>");
-                        for(var i = 0; i < data.length; i++){
-                             $("#county").append("<option>" + data[i].county + "</option>");
-                        }
-                        
-                        },
-                        complete: function(data,status) { //optional, used for debugging purposes
-                        //alert(status);
-                        }
+                            type: "GET",
+                            url: "http://itcdland.csumb.edu/~milara/ajax/countyList.php",
+                            dataType: "json",
+                            data: { "state": $("#state").val()},
+                            success: function(data,status) {
+                              
+                            //   alert(data[0].county);
+                            $("#county").html("<option> - Select One -</option>");
+                            for(var i = 0; i < data.length; i++)
+                            {
+                                 $("#county").append("<option>" + data[i].county + "</option>");
+                            }
+                            
+                            },
+                            complete: function(data,status) //optional, used for debugging purposes
+                            {
+                                //alert(status);
+                            }
                     
                     });//ajax
                     
@@ -99,10 +109,8 @@
                     
                 });
                 
-                $("#zipCode").change( function(){  
-                    
-                    //alert( $("#zipCode").val() );  
-                    
+                $("#zipCode").change( function()
+                {
                     $.ajax({
 
                         type: "GET",
@@ -111,20 +119,29 @@
                         data: { "zip": $("#zipCode").val()   },
                         success: function(data,status) {
                           
-                          //alert(data.city);
-                            $("#city").html(data.city);
-                            $("#lat").html(data.latitude);
-                            $("#long").html(data.longitude);
+                          if(!data){
+                                $("#zipMSG").html("Zip-Code not found!");
+                                $("#zipMSG").css("color", "red");
+                                $("#city").html("");
+                                $("#latitude").html("");
+                                $("#longitude").html("");
+                            }
+                            else
+                            {
+                                $("#zipMSG").html("");
+                                $("#city").html(data.city);
+                                $("#lat").html(data.latitude);
+                                $("#long").html(data.longitude);
+                            }
                         
                         },
                         complete: function(data,status) { //optional, used for debugging purposes
                         //alert(status);
                         }
                         
+                        
+                        
                     });//ajax
-                    
-                    
-                    
                 } );
                 
             }   ); //documentReady
@@ -142,10 +159,10 @@
         <form onsubmit="return validateForm()">
             <fieldset>
                <legend>Sign Up</legend>
-                First Name:  <input type="text"><br> 
-                Last Name:   <input type="text"><br> 
-                Email:       <input type="text"><br> 
-                Phone Number:<input type="text"><br><br>
+                First Name:  <input id = "first_name" type="text"><br> 
+                Last Name:   <input id = "last_name" type="text"><br> 
+                Email:       <input id = "email" type="text"><br> 
+                Phone Number:<input id = "phone" type="text"><br><br>
                 Zip Code:    <input type="text" id="zipCode"><br>
                 City:        <span id="city"></span>
                 <br>
@@ -164,15 +181,12 @@
                 
                 Select a County: <select id="county"></select><br>
                 
-                
                 Desired Username: <input type="text" id = "username"><br>
                 
                 Password: <input id = "password" type="password"><br>
                 
                 Type Password Again: <input id = "same"  type="password"><br>
-                
-                <p id="notMatchMessage">passwords do not match</p>
-                
+                <span id = "passwordErr"></span><br>
                 
                 <input type="submit" value="Sign up!">
                 <br />
