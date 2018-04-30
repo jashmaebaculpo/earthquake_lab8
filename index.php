@@ -152,9 +152,9 @@
                         
                         
                     });//ajax
-                } );
+                });
                 
-            }   ); //documentReady
+            }); //documentReady
             
             
             
